@@ -860,6 +860,8 @@ GameObject:
   - component: {fileID: 2106713571}
   - component: {fileID: 2106713578}
   - component: {fileID: 2106713579}
+  - component: {fileID: 2106713580}
+  - component: {fileID: 2106713581}
   m_Layer: 0
   m_Name: Player Demo
   m_TagString: Untagged
@@ -926,8 +928,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.21216929, y: -0.028289229}
-  m_Size: {x: 0.25451517, y: 0.60813063}
+  m_Offset: {x: -0.21216929, y: -0.041612804}
+  m_Size: {x: 0.25451517, y: 0.6347778}
   m_Direction: 0
 --- !u!96 &2106713573
 TrailRenderer:
@@ -1055,11 +1057,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
-  JumpImpulse: 10
+  jumpImpulse: 10
   dashDistance: 5
   dashDuration: 0.2
   dashCooldown: 1
   trailRenderer: {fileID: 2106713573}
+  canMove: 1
   _isFacingRight: 1
 --- !u!114 &2106713575
 MonoBehaviour:
@@ -1200,7 +1203,19 @@ MonoBehaviour:
     m_ActionId: 2626d355-f253-44e9-984f-1511975cb87c
     m_ActionName: Player/Move[/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2106713580}
+        m_TargetAssemblyTypeName: ComboAttack, Assembly-CSharp
+        m_MethodName: attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9775f77e-4be8-45dd-971e-161503d5a9bd
     m_ActionName: Player/Attack[/Keyboard/a]
   - m_PersistentCalls:
@@ -1275,6 +1290,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 78878c85-d5c4-4ec7-8937-54d920ee81df
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2106713581}
+        m_TargetAssemblyTypeName: HeavyAttack, Assembly-CSharp
+        m_MethodName: HeavyAtk
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a419b63b-5b23-4832-96dc-a85d61680789
+    m_ActionName: Player/Heavy Attack[/Keyboard/a]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1301,3 +1332,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2106713580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106713570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5805d3d613594439c92b456d41bdd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canReceiveInput: 0
+  inputReceived: 0
+--- !u!114 &2106713581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106713570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4403d7a45e55e5459d1888ccb6336d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

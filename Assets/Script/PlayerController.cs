@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;   
+
     public float walkSpeed = 5f;
-    public float JumpImpulse = 10f;
+    public float jumpImpulse = 10f;
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
@@ -19,11 +21,13 @@ public class PlayerController : MonoBehaviour
 
     private bool isDashing = false;
     private bool canDash = true;
+    public bool canMove = true;
 
     private TouchingDirection touchingDirection;
     private int maxJumps = 1;
     private int jumpCount = 0;
     private bool isMoving = false;
+
     public bool IsMoving
     {
         get
@@ -65,8 +69,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Vector3 moveDirection = new Vector3(moveInput.x, 0f, 0f).normalized;
-        transform.Translate(moveDirection * walkSpeed * Time.deltaTime);
+        if (canMove == true)
+        {
+            Vector3 moveDirection = new Vector3(moveInput.x, 0f, 0f).normalized;
+            transform.Translate(moveDirection * walkSpeed * Time.deltaTime);
+        }
+        else
+        {
+            walkSpeed = 0f;
+            return;
+        }
 
         if (touchingDirection.IsGround)
         {
@@ -77,7 +89,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        if(context.performed)
+        if (context.performed && canMove)
         {
             isMoving = true;
             anim.SetBool("IsMoving", true);
@@ -104,14 +116,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed && jumpCount < maxJumps && !touchingDirection.IsOnwall)
+        if (context.performed && jumpCount < maxJumps && !touchingDirection.IsOnwall && canMove)
         {
-            rb.velocity = new Vector2(rb.velocity.x, JumpImpulse);
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
             jumpCount++;
             anim.SetTrigger("Jump");
-            
         }
-       
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -126,8 +136,10 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         canDash = false;
+        canMove = false; // Disable movement during dash
 
         trailRenderer.emitting = true;
+        anim.SetBool("Dash", true);
 
         Vector3 dashEndPosition = transform.position + new Vector3(moveInput.x * dashDistance, 0f, 0f);
         float dashTime = 0f;
@@ -139,10 +151,11 @@ public class PlayerController : MonoBehaviour
             dashTime += Time.deltaTime;
             yield return null;
         }
-
+        anim.SetBool("Dash", false);
         trailRenderer.emitting = false;
 
         isDashing = false;
+        canMove = true; // Enable movement after dash
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;

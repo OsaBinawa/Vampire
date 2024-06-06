@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Heavy Attack",
+                    "type": "Button",
+                    "id": "a419b63b-5b23-4832-96dc-a85d61680789",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -82,7 +91,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -106,6 +115,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57bb86fa-489b-4a65-b1c6-15a66683e4d1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "Press(pressPoint=1)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Heavy Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
